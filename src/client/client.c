@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 		printf("1. Authenticate\n");
 		printf("2. Encrypt string\n");
 		printf("3. Log out\n");
-		printf("Exit\n");
+		printf("4. Exit\n");
 		printf("Option: ");
 		scanf("%d", &option);
 		getchar();
