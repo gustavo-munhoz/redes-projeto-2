@@ -107,6 +107,7 @@ void process_client_message(int client_sock, char *message, int *is_authenticate
         char *id = strtok(NULL, " ");
         char *password = strtok(NULL, " ");
         handle_authentication(client_sock, id, password, is_authenticated);
+        
     } else if (strcmp(message_type, ENCRYPT_REQUEST) == 0) {
         if (*is_authenticated) {
             char *text = strtok(NULL, " ");
@@ -114,18 +115,22 @@ void process_client_message(int client_sock, char *message, int *is_authenticate
             if (text != NULL && shift_str != NULL) {
                 int shift = atoi(shift_str);
                 handle_encryption(client_sock, text, shift);
+
             } else {
                 char response[2000];
                 strcpy(response, ENCRYPT_ERROR);
                 write(client_sock, response, strlen(response));
             }
+
         } else {
             char response[2000];
             strcpy(response, NOT_AUTHENTICATED);
             write(client_sock, response, strlen(response));
         }
+
     } else if (strcmp(message_type, LOGOUT_REQUEST) == 0) {
         handle_logout(client_sock, is_authenticated);
+
     } else {
         char response[2000];
         strcpy(response, UNKNOWN_COMMAND);
@@ -151,7 +156,7 @@ void handle_authentication(int client_sock, char *id, char *password, int *is_au
 }
 
 void handle_encryption(int client_sock, char *text, int shift) {
-    char encrypted_text[256];
+    char encrypted_text[2000];
     caesar_cipher(text, shift, encrypted_text);
 
     char response[2000];

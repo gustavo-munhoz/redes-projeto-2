@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 				break;
 			}
 			case 2: {
-				char text[256];
+				char text[2000];
 				int shift;
 				printf("Insert a message to encrypt: ");
 				fgets(text, sizeof(text), stdin);
@@ -91,13 +91,14 @@ int main(int argc, char* argv[]) {
 				continue;
 		}
 
-		// success sending
+		fflush(stdout);
+		fflush(stdin);
+
 		if (send(sock, message, strlen(message), 0) < 0) {
 			perror("Critical error");
 			return 1;
 		}
 
-		// receive
 		if (recv(sock, server_reply, 2000, 0) < 0) {
 			perror("Error");
 			break;
