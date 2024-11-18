@@ -18,7 +18,7 @@ void caesar_cipher(const char *text, int shift, char *output) {
                 ch = (ch - '0' + shift) % 10 + '0';
             }
         } else {
-            output[0] = '\0'; // Mensagem inválida
+            output[0] = '\0';
             return;
         }
 
